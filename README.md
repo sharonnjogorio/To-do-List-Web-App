@@ -1,6 +1,8 @@
-This is a basic To-Do List web application built using HTML, CSS, and vanilla JavaScript on the frontend, with a Node.js, Express, and MongoDB backend. 
+This To-Do List web application is built using HTML, CSS, and vanilla JavaScript on the frontend, and Node.js, Express, and MongoDB on the backend.
 
-The app allows users to create tasks with a title, description, and due date, view all tasks from the API, update or edit existing tasks, mark tasks as complete or incomplete, and delete tasks.
+The system includes user authentication, allowing users to register and log in before accessing their personal to-do list. Once logged in, users can create tasks with a title, optional description, and due date, view all their tasks retrieved from the API, update and edit tasks, mark them as complete or incomplete and delete them. 
 
-All data is stored through API calls instead of local storage, and the interface also highlights overdue tasks and can show due-date notifications. 
+All data is stored through secure API calls, not local storage. The app also highlights overdue tasks and can trigger due-date notifications.
+
+To run the project, start MongoDB, run the backend server and open the frontend HTML file in a browser.
 

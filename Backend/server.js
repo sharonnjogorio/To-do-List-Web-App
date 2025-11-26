@@ -13,7 +13,7 @@ app.use("/todos", require("./routes/todos"));
 
 
 mongoose.connect(process.env.MONGO_URI)
-then(() => console.log("MongoDB connected"))
+.then(() => console.log("MongoDB connected"))
 .catch(err => console.log(err));
 
 app.listen(process.env.PORT, () =>

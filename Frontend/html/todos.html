@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>To-Do Dashboard</title>
+    <link rel="stylesheet" href="../css/todos.css">
+</head>
+<body>
+
+<div class="container">
+
+    <h2>Your To-Do List</h2>
+
+    <!-- Create Todo Section -->
+    <section id="createSection">
+        <h3>Add New Task</h3>
+
+        <input type="text" id="title" placeholder="Task title" required>
+        <textarea id="description" placeholder="Description (optional)"></textarea>
+
+        <label>Due Date & Time:</label>
+        <input type="datetime-local" id="dueDate" required>
+
+        <button id="addBtn">Add Task</button>
+        <p id="createMessage"></p>
+    </section>
+
+    <hr>
+
+    <!-- List Todos Section -->
+    <section id="listSection">
+        <h3>Your Tasks</h3>
+        <ul id="todoList"></ul>
+    </section>
+
+</div>
+
+<script src="../js/todos.js"></script>
+</body>
+</html>

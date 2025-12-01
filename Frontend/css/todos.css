@@ -1,0 +1,30 @@
+#todoList {
+  list-style: none;
+  padding: 0;
+}
+
+.todo-item {
+  background: #fff;
+  padding: 12px;
+  margin-bottom: 10px;
+  border-radius: 8px;
+  box-shadow: 0 0 5px rgba(0,0,0,0.1);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.todo-info {
+  max-width: 70%;
+}
+
+.completed {
+  text-decoration: line-through;
+  opacity: 0.5;
+}
+
+button.small-btn {
+  padding: 5px 8px;
+  margin-left: 5px;
+  font-size: 12px;
+}

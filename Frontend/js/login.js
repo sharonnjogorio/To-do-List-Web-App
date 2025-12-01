@@ -27,5 +27,5 @@ document.getElementById("loginForm").addEventListener("submit", async (e) => {
     localStorage.setItem("userId", data.userId);
 
     // Redirect to todos page
-    window.location.href = "todos.html";
+    window.location.href = "../html/todos.html";
 });

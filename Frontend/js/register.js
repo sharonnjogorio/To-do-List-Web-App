@@ -26,7 +26,7 @@ document.getElementById("registerForm").addEventListener("submit", async (e) => 
     message.style.color = "green";
     message.textContent = "Registration successful! Redirecting...";
 
-    // Redirect to login page after 1.5 seconds
+    
     setTimeout(() => {
         window.location.href = "../html/login.html";
     }, 1500);

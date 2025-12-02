@@ -4,7 +4,6 @@ const User = require("../Models/user");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
-// REGISTER
 router.post("/register", async (req, res) => {
   try {
     const { name, email, password } = req.body;
@@ -26,7 +25,6 @@ router.post("/register", async (req, res) => {
   }
 });
 
-// LOGIN
 router.post("/login", async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -39,7 +37,13 @@ router.post("/login", async (req, res) => {
 
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
 
-    res.json({ msg: "Login successful", token, userId: user._id });
+    res.json({
+    msg: "Login successful",
+    token,
+    userId: user._id,
+    name: user.name
+    });
+
   } catch (err) {
     res.status(500).json({ error: err.message });
   }

@@ -1,10 +1,13 @@
 const API_URL = "http://localhost:5000/todos";
 const token = localStorage.getItem("token");
 
+
 if (!token) {
     alert("You must log in first");
     window.location.href = "login.html";
 }
+
+
 
 const todoList = document.getElementById("todoList");
 const addBtn = document.getElementById("addBtn");
@@ -160,21 +163,15 @@ function loadForEdit(todo) {
     editMode = true;
     editId = todo._id;
 
-
     document.getElementById("title").value = todo.title;
     document.getElementById("description").value = todo.description;
     const d = new Date(todo.dueDate);
-
 
     const local = new Date(d.getTime() - (d.getTimezoneOffset() * 60000))
     .toISOString()
     .slice(0, 16);
 
     document.getElementById("dueDate").value = local;
-
-
-    
-
     addBtn.textContent = "Update Task";
 }
 
@@ -201,7 +198,7 @@ function checkDueNotifications(todos) {
             !todo.completed &&
             !notifiedTasks.has(todo._id)
         ) {
-            showToast(`"${todo.title}" is now due!`);
+            showToast(`"${todo.title}" task is overdue!`);
             notifiedTasks.add(todo._id);
         }
     });
@@ -230,4 +227,10 @@ setInterval(async () => {
     const todos = await res.json();
     checkDueNotifications(todos);
 }, 10000);
+
+document.getElementById("logoutBtn").addEventListener("click", () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("name");
+    window.location.href = "../html/login.html";
+});
 

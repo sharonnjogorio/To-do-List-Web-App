@@ -22,10 +22,11 @@ document.getElementById("loginForm").addEventListener("submit", async (e) => {
         return;
     }
 
-    // Save token and userId
+    
     localStorage.setItem("token", data.token);
     localStorage.setItem("userId", data.userId);
+    localStorage.setItem("name", data.name);
 
-    // Redirect to todos page
+    
     window.location.href = "../html/todos.html";
 });

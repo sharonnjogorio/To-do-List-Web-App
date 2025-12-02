@@ -3,20 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <title>To-Do Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../css/todos.css">
 </head>
 <body>
 
-<div class="container">
+<h2 class="page-title">LET'S DO IT!</h2>
 
-    <h2>Your To-Do List</h2>
+<div class="todo-layout">
 
-    <!-- Create Todo Section -->
     <section id="createSection">
         <h3>Add New Task</h3>
 
-        <input type="text" id="title" placeholder="Task title" required>
-        <textarea id="description" placeholder="Description (optional)"></textarea>
+        <input type="text" id="title" placeholder="Task Title" required>
+        <textarea id="description" placeholder="Task Description "></textarea>
 
         <label>Due Date & Time:</label>
         <input type="datetime-local" id="dueDate" required>
@@ -25,15 +25,15 @@
         <p id="createMessage"></p>
     </section>
 
-    <hr>
 
-    <!-- List Todos Section -->
     <section id="listSection">
         <h3>Your Tasks</h3>
         <ul id="todoList"></ul>
     </section>
 
 </div>
+<div id="toast"></div>
+
 
 <script src="../js/todos.js"></script>
 </body>

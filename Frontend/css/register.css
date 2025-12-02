@@ -1,43 +1,79 @@
 body {
-  font-family: Arial, sans-serif;
-  background: #f2f2f2;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
+    font-family: 'Montserrat', sans-serif;
+    background: linear-gradient(135deg, #0d071a, #1a102d);
+    min-height: 100vh;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 60px;
+    color: #e8e0ff;
 }
 
-.container {
-  background: white;
-  padding: 30px;
-  width: 300px;
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+.register-title {
+    margin-bottom: 20px;
+    font-size: 28px;
+    font-weight: 600;
+    text-shadow: 0 0 12px rgba(155, 89, 182, 0.8);
+}
+
+.register-container {
+    width: 370px;
+    padding: 25px;
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 14px;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 0 20px rgba(155, 89, 182, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    text-align: center;
 }
 
 input {
-  width: 100%;
-  margin: 10px 0;
-  padding: 12px;
-  font-size: 14px;
+    width: 90%;
+    padding: 12px;
+    margin: 8px 0;
+    border-radius: 30px;
+    border: 1px solid rgba(185, 109, 212, 0.4);
+    background: rgba(255, 255, 255, 0.1);
+    color: #e8e0ff;
+    font-size: 15px;
+}
+
+input::placeholder {
+    color: rgba(230, 200, 255, 0.6);
 }
 
 button {
-  width: 100%;
-  padding: 12px;
-  background: teal;
-  color: white;
-  border: none;
-  cursor: pointer;
-  font-size: 16px;
+    width: 50%;
+    padding: 12px;
+    margin-top: 10px;
+    border-radius: 30px;
+    border: none;
+    background: rgba(155, 89, 182, 0.85);
+    color: white;
+    font-size: 15px;
+    cursor: pointer;
+    box-shadow: 0 0 12px rgba(155, 89, 182, 0.7);
+    transition: 0.3s ease;
 }
 
 button:hover {
-  opacity: 0.9;
+    background: rgba(185, 109, 212, 1);
+    box-shadow: 0 0 18px rgba(185, 109, 212, 0.9);
 }
 
-#message {
-  margin-top: 10px;
-  text-align: center;
-  color: red;
+/* Switch link */
+.switch {
+    margin-top: 12px;
+    font-size: 14px;
+}
+
+.switch a {
+    color: #b57bff;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.switch a:hover {
+    text-decoration: underline;
 }

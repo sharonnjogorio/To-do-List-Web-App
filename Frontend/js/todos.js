@@ -6,13 +6,11 @@ if (!token) {
     window.location.href = "login.html";
 }
 
-// UI Elements
 const todoList = document.getElementById("todoList");
 const addBtn = document.getElementById("addBtn");
 const createMessage = document.getElementById("createMessage");
 
 
-// ----------------- FETCH TODOS -----------------
 async function loadTodos() {
     todoList.innerHTML = "<p>Loading...</p>";
 
@@ -21,13 +19,16 @@ async function loadTodos() {
     });
 
     const todos = await res.json();
+    checkDueNotifications(todos);
     renderTodos(todos);
+    
 }
 
 loadTodos();
 
 
-// ----------------- RENDER TODOS -----------------
+
+
 function renderTodos(todos) {
     todoList.innerHTML = "";
 
@@ -38,32 +39,48 @@ function renderTodos(todos) {
         const info = document.createElement("div");
         info.className = "todo-info";
 
-        const isOverdue = new Date(todo.dueDate) < new Date();
+        
+        const date = new Date(todo.dueDate);
+        const formatted = date.toLocaleString([], {
+            hour: "numeric",
+            minute: "2-digit",
+            month: "numeric",
+            day: "numeric",
+            year: "numeric"
+        });
+
+    
+        const isOverdue = date < new Date();
+        const overdueClass = (!todo.completed && isOverdue) ? "overdue" : "";
         const completedClass = todo.completed ? "completed" : "";
 
+        
         info.innerHTML = `
-            <strong class="${completedClass}">${todo.title}</strong><br>
+            <strong class="${completedClass} ${overdueClass}">${todo.title}</strong><br>
             <small>${todo.description || ""}</small><br>
-            <small>Due: ${new Date(todo.dueDate).toLocaleString()}</small>
-            ${isOverdue && !todo.completed ? "<span style='color:red'> (Overdue)</span>" : ""}
+            <small>Due: ${formatted}</small>
         `;
 
-        // Buttons
+        
         const btns = document.createElement("div");
 
-        // Toggle Complete
         const completeBtn = document.createElement("button");
         completeBtn.textContent = todo.completed ? "Undo" : "Done";
         completeBtn.className = "small-btn";
         completeBtn.onclick = () => toggleComplete(todo);
 
-        // Delete
+        const editBtn = document.createElement("button");
+        editBtn.textContent = "Edit";
+        editBtn.className = "small-btn";
+        editBtn.onclick = () => loadForEdit(todo);
+
         const deleteBtn = document.createElement("button");
         deleteBtn.textContent = "Delete";
         deleteBtn.className = "small-btn";
         deleteBtn.onclick = () => deleteTodo(todo._id);
 
         btns.appendChild(completeBtn);
+        btns.appendChild(editBtn);
         btns.appendChild(deleteBtn);
 
         li.appendChild(info);
@@ -73,7 +90,9 @@ function renderTodos(todos) {
 }
 
 
-// ----------------- ADD TODO -----------------
+
+
+
 addBtn.addEventListener("click", async () => {
     const title = document.getElementById("title").value.trim();
     const description = document.getElementById("description").value.trim();
@@ -86,21 +105,45 @@ addBtn.addEventListener("click", async () => {
 
     createMessage.textContent = "Saving...";
 
-    await fetch(API_URL, {
-        method: "POST",
-        headers: {
-            "Authorization": token,
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ title, description, dueDate })
-    });
+    if (editMode) {
+        await fetch(`${API_URL}/${editId}`, {
+            method: "PUT",
+            headers: {
+                "Authorization": token,
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ title, description, dueDate })
+        });
 
-    createMessage.textContent = "Task added!";
+        createMessage.textContent = "Task updated!";
+        editMode = false;
+        editId = null;
+        addBtn.textContent = "Add Task"; 
+    } 
+    else {
+        
+        await fetch(API_URL, {
+            method: "POST",
+            headers: {
+                "Authorization": token,
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ title, description, dueDate })
+        });
+
+        createMessage.textContent = "Task added!";
+    }
+
+
+    document.getElementById("title").value = "";
+    document.getElementById("description").value = "";
+    document.getElementById("dueDate").value = "";
+
     loadTodos();
 });
 
 
-// ----------------- TOGGLE COMPLETE -----------------
+
 async function toggleComplete(todo) {
     await fetch(`${API_URL}/${todo._id}`, {
         method: "PUT",
@@ -116,8 +159,28 @@ async function toggleComplete(todo) {
     loadTodos();
 }
 
+let editMode = false;
+let editId = null;
 
-// ----------------- DELETE TODO -----------------
+ 
+function loadForEdit(todo) {
+    editMode = true;
+    editId = todo._id;
+
+
+    document.getElementById("title").value = todo.title;
+    document.getElementById("description").value = todo.description;
+    
+
+    document.getElementById("dueDate").value = new Date(todo.dueDate)
+        .toISOString()
+        .slice(0,16);
+
+
+    addBtn.textContent = "Update Task";
+}
+
+
 async function deleteTodo(id) {
     if (!confirm("Delete this task?")) return;
 
@@ -127,4 +190,46 @@ async function deleteTodo(id) {
     });
 
     loadTodos();
+} let notifiedTasks = new Set();
+
+function checkDueNotifications(todos) {
+    const now = new Date();
+
+    todos.forEach(todo => {
+        const due = new Date(todo.dueDate);
+
+        if (
+            now >= due &&
+            !todo.completed &&
+            !notifiedTasks.has(todo._id)
+        ) {
+            showToast(`"${todo.title}" is now due!`);
+            notifiedTasks.add(todo._id);
+        }
+    });
 }
+
+
+function showToast(message) {
+    const toastContainer = document.getElementById("toast");
+    const toast = document.createElement("div");
+
+    toast.className = "toast-message";
+    toast.textContent = message;
+
+    toastContainer.appendChild(toast);
+
+    setTimeout(() => {
+        toast.remove();
+    }, 5000);
+}
+
+setInterval(async () => {
+    const res = await fetch(API_URL, {
+        headers: { "Authorization": token }
+    });
+
+    const todos = await res.json();
+    checkDueNotifications(todos);
+}, 10000);
+

@@ -27,8 +27,6 @@ async function loadTodos() {
 loadTodos();
 
 
-
-
 function renderTodos(todos) {
     todoList.innerHTML = "";
 
@@ -90,9 +88,6 @@ function renderTodos(todos) {
 }
 
 
-
-
-
 addBtn.addEventListener("click", async () => {
     const title = document.getElementById("title").value.trim();
     const description = document.getElementById("description").value.trim();
@@ -134,14 +129,12 @@ addBtn.addEventListener("click", async () => {
         createMessage.textContent = "Task added!";
     }
 
-
     document.getElementById("title").value = "";
     document.getElementById("description").value = "";
     document.getElementById("dueDate").value = "";
 
     loadTodos();
 });
-
 
 
 async function toggleComplete(todo) {
@@ -170,19 +163,24 @@ function loadForEdit(todo) {
 
     document.getElementById("title").value = todo.title;
     document.getElementById("description").value = todo.description;
+    const d = new Date(todo.dueDate);
+
+
+    const local = new Date(d.getTime() - (d.getTimezoneOffset() * 60000))
+    .toISOString()
+    .slice(0, 16);
+
+    document.getElementById("dueDate").value = local;
+
+
     
-
-    document.getElementById("dueDate").value = new Date(todo.dueDate)
-        .toISOString()
-        .slice(0,16);
-
 
     addBtn.textContent = "Update Task";
 }
 
 
 async function deleteTodo(id) {
-    if (!confirm("Delete this task?")) return;
+    if (!confirm("Do you want to delete this task?")) return;
 
     await fetch(`${API_URL}/${id}`, {
         method: "DELETE",

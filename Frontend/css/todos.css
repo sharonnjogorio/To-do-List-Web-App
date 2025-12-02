@@ -17,7 +17,17 @@ font-size: 22px;
   margin-top: 10px;
   margin-bottom: 10px;
   font-size: 40px;
-  text-align: center
+  text-align: center;
+  gap: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.title-icon {
+    width: 55px;
+    height: 55px;
+    filter: drop-shadow(0 0 6px rgba(178, 120, 255, 0.8));
+    opacity: 0.9;
 }
 
 .todo-layout {
@@ -60,7 +70,6 @@ input, textarea, button {
   width: 90%;
   padding: 10px;
   margin: 8px 0;
-  
   border-radius: 25px;
 }
 
@@ -120,6 +129,7 @@ button:hover {
 
 .todo-info {
   max-width: 90%;
+  font-size: 18px;
 }
 .completed {
   text-decoration-line: line-through;
@@ -130,7 +140,7 @@ button:hover {
 }
 
 button.small-btn {
-  padding: 5px 8px;
+  padding: 10px 10px;
   margin-left: 5px;
   font-size: 15px;
   border-radius: 30px;
@@ -146,15 +156,14 @@ button.small-btn {
 .toast-message {
   background: rgba(155, 89, 182, 0.85);
   color: white;
-  padding: 22px 28px;
+  padding: 15px 20px;
   margin-bottom: 10px;
-  border-radius: 20px;
+  border-radius: 30px;
   box-shadow: 0 0 12px rgba(155, 89, 182, 0.7);
   animation: fadeInOut 4s ease forwards;
-  font-size: 20px;
+  font-size: 15px;
   backdrop-filter: blur(6px);
 }
-
 
 @keyframes fadeInOut {
   0% { opacity: 0; transform: translateY(-10px); }
@@ -162,9 +171,10 @@ button.small-btn {
   80% { opacity: 1; }
   100% { opacity: 0; transform: translateY(-10px); }
 }
+
 .overdue {
   text-decoration-line: line-through;
-  text-decoration-color: #ff4d67; 
+  text-decoration-color: red; 
   color: #ffd1d9;
   opacity: 1.0;
 }

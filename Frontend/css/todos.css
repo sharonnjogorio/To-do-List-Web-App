@@ -60,10 +60,13 @@ font-size: 22px;
 #createSection {
   width: 50%;
   padding: 25px;
+  align-self: flex-start;
 }
 #listSection {
   width: 90%;
   padding: 25px;
+  overflow-y: auto;
+  max-height: 80vh;
 }
 
 input, textarea, button {
